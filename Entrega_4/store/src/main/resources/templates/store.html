@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steam</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #212529;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">Steam</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Início</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Loja</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Comunidade</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Sobre</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Perfil</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="text-center mt-5">
+    <h1>Bem-vindo à Steam</h1>
+    <p>A melhor plataforma de jogos para PC</p>
+  </header>
+
+  <section class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <img src="/game1.jpeg" class="card-img-top" alt="Game Image">
+            <div class="card-body">
+              <h5 class="card-title">Nome do Jogo</h5>
+              <p class="card-text">Descrição do jogo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <a href="/game1" class="btn btn-primary">Comprar</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Game Image">
+            <div class="card-body">
+              <h5 class="card-title">Nome do Jogo</h5>
+              <p class="card-text">Descrição do jogo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <a href="#" class="btn btn-primary">Comprar</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Game Image">
+            <div class="card-body">
+              <h5 class="card-title">Nome do Jogo</h5>
+              <p class="card-text">Descrição do jogo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <a href="#" class="btn btn-primary">Comprar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-dark text-dark py-3 text-center">
+    <p>&copy; 2023 Steam. Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

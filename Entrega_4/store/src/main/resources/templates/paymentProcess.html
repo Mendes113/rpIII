@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagamento em Processamento</title>
+    <!-- Importe o Bootstrap CSS se necessário -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Pagamento em Processamento</h1>
+
+        <p>Ocorreu um erro durante sua transação. O jogo já existe na biblioteca do usuário.</p>
+        
+        <th:block th:if="${error}">
+            <div class="alert alert-danger mt-4" th:text="${error}"></div>
+        </th:block>
+        
+        <a href="/jogos/page" class="btn btn-primary mt-4">Voltar para Jogos</a>
+    </div>
+
+    <!-- Importe o Bootstrap JS se necessário -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

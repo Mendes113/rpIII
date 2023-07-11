@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Página de Pagamento</title>
+    <!-- Adicione a seguinte linha para importar o Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    
+    <style>
+        body {
+            background-color: #171a21;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            margin-top: 40px;
+        }
+        
+        h1 {
+            color: #66c0f4;
+        }
+        
+        label {
+            margin-top: 10px;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            background-color: #2c2f36;
+            color: white;
+        }
+        
+        button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Página de Pagamento</h1>
+        
+  
+        <form method="post" th:action="@{/payment/process/{jogoId}(jogoId=${jogo.jogoId})}">
+            <div class="form-group">
+                <label for="name">Nome no Cartão</label>
+                <input type="text" id="name" name="userName" placeholder="Insira o nome no cartão" required>
+                <small class="form-text text-muted">Exemplo: João Da Silva</small>
+            </div>
+            <div class="form-group">
+                <label for="cardNumber">Número do Cartão</label>
+                <input type="text" id="creditCard" name="creditCard" placeholder="Insira o número do cartão" required>
+                <small class="form-text text-muted">Formato esperado: 0000 0000 0000 0000</small>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="expiryDate">Data de Validade</label>
+                    <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/AA" pattern="^(0[1-9]|1[0-2])\/[0-9]{2}$" required>
+                    <small class="form-text text-muted">Formato esperado: MM/AA</small>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" name="cvv" placeholder="CVV" pattern="[0-9]{3}" required>
+                    <small class="form-text text-muted">Digite os 3 dígitos do CVV</small>
+                </div>
+               
+            </div>
+            <div class="form-group">
+                <label for="email">Endereço de Email</label>
+                <input type="email" id="email" name="email" placeholder="Insira seu email" required>
+                <small class="form-text text-muted">Exemplo: exemplo@exemplo.com</small>
+            <button class="btn btn-primary" type="submit">Pagar</button>
+        </form>
+        
+    </div>
+
+    <!-- Adicione a seguinte linha para importar o Bootstrap JS -->
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
+</body>
+</html>

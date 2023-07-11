@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil do Publicador</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+        body {
+            background-color: #171a21;
+            color: white;
+        }
+
+        .container {
+            margin-top: 40px;
+        }
+
+        h1 {
+            color: #66c0f4;
+        }
+
+        .profile-info {
+            margin-bottom: 20px;
+        }
+
+        .profile-label {
+            font-weight: bold;
+        }
+
+        .jogos-table {
+            margin-top: 20px;
+        }
+
+        .jogos-table th,
+        .jogos-table td {
+            color: white;
+        }
+
+        .jogos-table tbody tr:hover {
+            background-color: #2c2f36;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Perfil do Publicador</h1>
+
+        <div class="profile-info">
+            <label class="profile-label">Nome:</label>
+            <span th:text="${user.name}"></span>
+        </div>
+
+        <div class="profile-info">
+            <label class="profile-label">Email:</label>
+            <span th:text="${user.email}"></span>
+        </div>
+
+        <div class="profile-info">
+            <label class="profile-label">Papel:</label>
+            <span th:text="${user.role}"></span>
+        </div>
+
+        <h2 class="mt-4">Jogos Publicados</h2>
+
+        <table class="table mt-4 jogos-table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Preço</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="jogo : ${user.jogos}">
+                    <td th:text="${jogo.nome}"></td>
+                    <td th:text="${jogo.categoria}"></td>
+                    <td th:text="${jogo.preco}"></td>
+                    <td>
+                        <button class="btn btn-success" onclick="playGame('${jogo.email}')">Jogar</button>
+                        <button class="btn btn-danger" onclick="deleteGame('${jogo.id}')">Apagar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="add-game-form mt-4">
+            <h2>Publicar Jogo</h2>
+            <form action="/jogos/publish" method="post" th:object="${novoJogo}">
+                <div class="form-group">
+                    <label for="gameName">Nome do Jogo:</label>
+                    <input type="text" class="form-control" id="gameName" name="nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="gameDescricao">Descrição:</label>
+                    <input type="text" class="form-control" id="gameDescricao" name="descricao" required>
+                </div>
+                <div class="form-group">
+                    <label for="gamePrice">Preço:</label>
+                    <input type="number" class="form-control" id="gamePrice" name="preco" required>
+                </div>
+                <div class="form-group">
+                    <label for="gameCategoria">Categoria:</label>
+                    <input type="text" class="form-control" id="gameCategoria" name="categoria" required>
+                </div>
+                <div class="form-group">
+                    <label for="gamePlataformList">Lista de Plataformas:</label>
+                    <input type="text" class="form-control" id="gamePlataformList" name="plataformList" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Publicar</button>
+            </form>
+        </div>
+        <div id="deleteConfirmationMessage" style="display: none;">
+            <h3>Jogo apagado com sucesso!</h3>
+        </div>
+    </div>
+
+    <script>
+        function deleteGame(gameId) {
+            $.ajax({
+                url: "/publishers/deleteGame",
+                type: "POST",
+                data: { gameId: gameId },
+                success: function() {
+                    // Exibir a mensagem de confirmação
+                    var deleteConfirmationMessage = document.getElementById("deleteConfirmationMessage");
+                    deleteConfirmationMessage.style.display = "block";
+
+                    // Recarregar a página após apagar o jogo
+                    location.reload();
+                },
+                error: function() {
+                    // Tratar erros, se necessário
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/logReg.css">
+</head>
+<body>
+    <div class="section">
+        <div class="container">
+            <div class="row full-height justify-content-center">
+                <div class="col-12 text-center align-self-center py-5">
+                    <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                        <h6 class="mb-0 pb-3"><span>Conecte-se</span><span>Cadastre-se</span></h6>
+                        <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
+                        <label for="reg-log"></label>
+                        <div class="card-3d-wrap mx-auto">
+                            <div class="card-3d-wrapper">
+                                <div class="card-front">
+                                    <div class="center-wrap">
+                                        <div class="section text-center">
+                                            <h4 class="mb-4 pb-3">Login</h4>
+                                            <form th:action="@{/login}" method="post" class="signin-form" onsubmit="return validateForm();"> 
+                                                <div class="form-group">
+                                                    <label class="email" for="name">Username</label>
+                                                    <input type="text" class="form-style" placeholder="Email" name="email" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="label" for="password">Password</label>
+                                                    <input type="password" class="form-style" placeholder="Password" name="password" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign In</button>
+                                                </div>
+                                                <div class="form-group d-md-flex">
+                                                    <div class="w-50 text-left">
+                                                        <label class="checkbox-wrap checkbox-primary mb-0">Remember Me
+                                                            <input type="checkbox" checked>
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="w-50 text-md-right">
+                                                        <a href="#">Forgot Password</a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-back">
+                                    <div class="center-wrap">
+                                        <div class="section text-center">
+                                            <h4 class="mb-4 pb-3">Cadastre-se</h4>
+                                            <form action="/users/register" method="post" class="signup-form">
+                                                <div class="form-group mt-2">
+                                                    <input type="text" name="name" class="form-style" placeholder="digite seu nome completo" required>
+                                                    <i class="input-icon uil uil-user"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input type="email" name="email" class="form-style" placeholder="Seu email" required>
+                                                    <i class="input-icon uil uil-at"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input type="password" name="password" class="form-style" placeholder="Sua senha" required>
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input type="text" name="endereco" class="form-style" placeholder="Digite seu endereço" required>
+                                                    <i class="input-icon uil uil-user"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <label class="label" for="dob">Data de Nascimento</label>
+                                                    <input type="date" name="dob" class="form-style" required>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <label class="label" for="gender">Gênero</label>
+                                                    <select name="gender" class="form-style" required>
+                                                        <option value="">Selecione</option>
+                                                        <option value="Masculino">Masculino</option>
+                                                        <option value="Feminino">Feminino</option>
+                                                        <option value="Não binário">Não binário</option>
+                                                        <option value="Preferir não informar">Preferir não informar</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <label class="label" for="platform">Plataforma que possui</label>
+                                                    <select name="platform" class="form-style" required>
+                                                        <option value="">Selecione</option>
+                                                        <option value="PC">PC</option>
+                                                        <option value="XBOX">XBOX</option>
+                                                        <option value="PlayStation">PlayStation</option>
+                                                        <option value="Nintendo">Nintendo</option>
+                                                    </select>
+                                                </div>
+                                                <button type="submit" class="btn mt-4">Cadastre</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="alert-container"></div>
+
+    <script>
+        function showAlert(message) {
+            const alertContainer = document.getElementById("alert-container");
+            const alertElement = document.createElement("div");
+            alertElement.className = "alert";
+            alertElement.innerText = message;
+            alertContainer.appendChild(alertElement);
+        }
+
+        function validateForm() {
+            const emailInput = document.getElementsByName("email")[0];
+            const passwordInput = document.getElementsByName("password")[0];
+
+            if (emailInput.value.trim() === "" || passwordInput.value.trim() === "") {
+                showAlert("Por favor, preencha todos os campos.");
+                return false;
+            }
+
+            // Adicione outras validações aqui, se necessário
+
+            return true;
+        }
+    </script>
+
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/logReg.css">
+    <style>
+        .alert {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <a href="https://front.codes/" class="logo" target="_blank">
+        <img src="https://assets.codepen.io/1462889/fcy.png" alt="">
+    </a>
+
+    <div class="section">
+        <div class="container">
+            <div class="row full-height justify-content-center">
+                <div class="col-12 text-center align-self-center py-5">
+                    <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                        <h6 class="mb-0 pb-3"><span>Log In </span><span>Sign Up</span></h6>
+                        <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
+                        <label for="reg-log"></label>
+                        <div class="card-3d-wrap mx-auto">
+                            <div class="card-3d-wrapper">
+                                <div class="card-front">
+                                    <div class="center-wrap">
+                                        <div class="section text-center">
+                                            <h4 class="mb-4 pb-3">Log In</h4>
+                                            <form th:action="@{/login}" method="post" class="signin-form" onsubmit="return validateForm();"> 
+                                                <div class="form-group">
+                                                    <label class="email" for="name">Username</label>
+                                                    <input type="text" class="form-control" placeholder="Email" name="email" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="label" for="password">Password</label>
+                                                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign In</button>
+                                                </div>
+                                                <div class="form-group d-md-flex">
+                                                    <div class="w-50 text-left">
+                                                        <label class="checkbox-wrap checkbox-primary mb-0">Remember Me
+                                                            <input type="checkbox" checked>
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="w-50 text-md-right">
+                                                        <a href="#">Forgot Password</a>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-back">
+                                    <div class="center-wrap">
+                                        <div class="section text-center">
+                                            <h4 class="mb-4 pb-3">Sign Up</h4>
+                                            <div class="form-group">
+                                                <input type="text" name="logname" class="form-style" placeholder="Your Full Name" id="logname" autocomplete="off">
+                                                <i class="input-icon uil uil-user"></i>
+                                            </div>    
+                                            <div class="form-group mt-2">
+                                                <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off">
+                                                <i class="input-icon uil uil-at"></i>
+                                            </div>    
+                                            <div class="form-group mt-2">
+                                                <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
+                                                <i class="input-icon uil uil-lock-alt"></i>
+                                            </div>
+                                            <a href="#" class="btn mt-4">submit</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="alert-container"></div>
+
+    <script>
+        function showAlert(message) {
+            const alertContainer = document.getElementById("alert-container");
+            const alertElement = document.createElement("div");
+            alertElement.className = "alert";
+            alertElement.innerText = message;
+            alertContainer.appendChild(alertElement);
+        }
+
+        function validateForm() {
+            const emailInput = document.getElementsByName("email")[0];
+            const passwordInput = document.getElementsByName("password")[0];
+
+            if (emailInput.value.trim() === "" || passwordInput.value.trim() === "") {
+                showAlert("Por favor, preencha todos os campos.");
+                return false;
+            }
+
+            // Adicione outras validações aqui, se necessário
+
+            return true;
+        }
+    </script>
+</body>
+</html> -->

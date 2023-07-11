@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-StoreApplication<store>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.projeto.store.StoreApplication",
+            "projectName": "store",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

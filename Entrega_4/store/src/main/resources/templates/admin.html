@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil do Usuário</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    
+    <style>
+        body {
+            background-color: #171a21;
+            color: white;
+        }
+        
+        .container {
+            margin-top: 40px;
+        }
+        
+        h1 {
+            color: #66c0f4;
+        }
+        
+        .profile-info {
+            margin-bottom: 20px;
+        }
+        
+        .profile-label {
+            font-weight: bold;
+        }
+        
+        .jogos-table {
+            margin-top: 20px;
+        }
+        
+        .jogos-table th,
+        .jogos-table td {
+            color: white;
+        }
+        
+        .jogos-table tbody tr:hover {
+            background-color: #2c2f36;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Perfil do Usuário</h1>
+        
+        <div class="profile-info">
+            <label class="profile-label">Nome:</label>
+            <span th:text="${user.name}"></span>
+        </div>
+        
+        <div class="profile-info">
+            <label class="profile-label">Email:</label>
+            <span th:text="${user.email}"></span>
+        </div>
+        
+        <div class="profile-info">
+            <label class="profile-label">Data de Nascimento:</label>
+            <span th:text="${user.dob}"></span>
+        </div>
+        
+        <div class="profile-info">
+            <label class="profile-label">Plataformas que Possui:</label>
+            <ul>
+                <li th:each="plataforma : ${user.plataformasQuePossui}" th:text="${plataforma}"></li>
+            </ul>
+        </div>
+        
+        <div class="profile-info">
+            <label class="profile-label">Gênero:</label>
+            <span th:text="${user.gender}"></span>
+        </div>
+        
+        <div class="profile-info">
+            <label class="profile-label">Endereço:</label>
+            <span th:text="${user.addres}"></span>
+        </div>
+        
+        <h2 class="mt-4">Jogos</h2>
+        
+        <table class="table mt-4 jogos-table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Preço</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="jogo : ${user.jogos}">
+                    <td th:text="${jogo.nome}"></td>
+                    <td th:text="${jogo.categoria}"></td>
+                    <td th:text="${jogo.preco}"></td>
+                    <td>
+                        <button class="btn btn-success" onclick="playGame('${jogo.email}')">Jogar</button>
+                    </td>
+                </tr>
+            </tbody>
+            
+        </table>
+
+        <div class="delete-form mt-4" id="deleteForm">
+            <h2>Excluir Usuário</h2>
+            <form action="/users/delete" method="post">
+                <div class="form-group">
+                    <label for="email">Email do Usuário:</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <button type="submit" class="btn btn-danger">Excluir</button>
+            </form>
+        </div>
+        
+        <div id="confirmationMessage" style="display: none;">
+            <h3>Usuário excluído com sucesso!</h3>
+        </div>
+        
+        <div class="update-role-form mt-4">
+            <h2>Atualizar Função do Usuário</h2>
+            <form action="/users/updateRole" method="post">
+                <div class="form-group">
+                    <label for="email">Email do Usuário:</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">Nova Função:</label>
+                    <select class="form-control" id="role" name="role">
+                        <option value="admin">Administrador</option>
+                        <option value="user">Usuário</option>
+                        <option value="publisher">publisher </option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Atualizar Função</button>
+            </form>
+        </div>
+        
+        <div id="roleConfirmationMessage" th:if="${roleUpdated}" style="display: none;">
+            <h3>Função do Usuário atualizada com sucesso!</h3>
+        </div>
+    </div>
+
+    <script>
+        function deleteUser(email) {
+            $.ajax({
+                url: "/users/delete",
+                type: "POST",
+                data: { email: email },
+                success: function() {
+                    // Exibir a mensagem de confirmação
+                    var confirmationMessage = document.getElementById("confirmationMessage");
+                    confirmationMessage.style.display = "block";
+                    
+                    // Redirecionar para a página "/users/admin" após a exclusão
+                    window.location.href = "/users/admin";
+                },
+                error: function() {
+                    // Tratar erros, se necessário
+                }
+            });
+        }
+        
+        // Exibir a mensagem de confirmação se o atributo "roleUpdated" for verdadeiro
+        var roleUpdated = /*[[${roleUpdated}]]*/ false;
+        if (roleUpdated) {
+            var roleConfirmationMessage = document.getElementById("roleConfirmationMessage");
+            roleConfirmationMessage.style.display = "block";
+        }
+    </script>
+</body>
+</html>
