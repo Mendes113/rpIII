@@ -1,26 +1,30 @@
 package com.projeto.store.services;
-
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Aspect
 @Component
 public class LoggingAspect {
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingAspect.class);
 
     @Before("execution(* com.projeto.store.services.UserService.*(..))")
     public void beforeUserMethods(JoinPoint joinPoint) {
         System.out.println("Before executing UserService method: " + joinPoint.getSignature());
 
         // Verificar o usuário logado
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String loggedInUser = authentication.getName();
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String loggedInUser = request.getUserPrincipal().getName();
         System.out.println("Logged in user: " + loggedInUser);
-        
+
         // Acesso ao perfil do usuário e outras lógicas relacionadas podem ser implementadas aqui
         // Por exemplo, você pode chamar um método do serviço de usuário para obter o perfil do usuário com base no nome de usuário
         // userService.getUserProfile(loggedInUser);
@@ -32,5 +36,8 @@ public class LoggingAspect {
         System.out.println("Method returned: " + result);
     }
 
-    // Adicione outros métodos de aspecto conforme necessário
+    @Before("execution(* com.projeto.store.services.UserService.deleteUser(..)) && args(userId)")
+    public void beforeDeleteUser(String userId) {
+        LOGGER.info("Deleting user with ID: {}", userId);
+    }
 }

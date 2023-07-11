@@ -30,14 +30,20 @@ public class UserService {
     @Autowired
     private JogoService jogoService;
 
-    public User createUser(User user){
-        if(verifyExistingUser(user.getEmail())){
-            LOGGER.info("User already exists");
-            return null;
-        }
-        user.setUserId(UUID.randomUUID().toString().split("-")[0]);
-        return userRepository.save(user);
+    public User createUser(User user) {
+    if (verifyExistingUser(user.getEmail())) {
+        LOGGER.info("User already exists for email: {}", user.getEmail());
+        return null;
     }
+
+    user.setUserId(UUID.randomUUID().toString().split("-")[0]);
+    User createdUser = userRepository.save(user);
+    
+    LOGGER.info("User created: {}", createdUser.getUserId());
+
+    return createdUser;
+}
+
 
     public User getUserById(String userId){
         return userRepository.findByUserId(userId);
@@ -66,7 +72,8 @@ public class UserService {
     }
     
 
-    public String deleteUser(String userId){
+     public String deleteUser(String userId) {
+        LOGGER.info("Deleting user with ID: {}", userId);
         userRepository.deleteById(userId);
         return userId;
     }
@@ -190,55 +197,14 @@ public User updateRole(String email, String role) {
 public String deleteUserByEmail(String email) {
     User user = getUserByEmail(email);
     if (user != null) {
+        LOGGER.info("Deleting user with email: {}", email);
         userRepository.deleteById(user.getUserId());
         return "Usuário excluído com sucesso";
     } else {
+        LOGGER.info("User not found for email: {}", email);
         return "Usuário não encontrado";
     }
 }
 
+
 }
-
-//  @Autowired
-//     private JogoRepository jogoRepository;
-
-//     public Jogo createJogo(Jogo jogo) {
-//         jogo.setJogoId(UUID.randomUUID().toString().split("-")[0]);
-//         return jogoRepository.save(jogo);
-//     }
-
-
-//     public List<Jogo> getAllJogos() {
-//         return jogoRepository.findAll();
-//     }
-
-//     public Jogo getJogoById(String id) {
-//         return jogoRepository.findById(id).orElse(null);
-//     }
-
-//     public List<Jogo> getJogoByNome(String nome) {
-//         return jogoRepository.findByNome(nome);
-//     }
-
-//     public List<Jogo> getJogoByCategoria(String categoria) {
-//         return jogoRepository.findByCategoria(categoria);
-//     }
-
-//     public Jogo updateJogo(String jogoId, Jogo jogoRequest) {
-//         Jogo existingJogo = jogoRepository.findById(jogoId).orElse(null);
-//         if (existingJogo != null) {
-//             existingJogo.setNome(jogoRequest.getNome());
-//             existingJogo.setDescricao(jogoRequest.getDescricao());
-//             existingJogo.setPreco(jogoRequest.getPreco());
-//             existingJogo.setCategoria(jogoRequest.getCategoria());
-//             return jogoRepository.save(existingJogo);
-//         } else {
-//             return null; // Handle case when jogo does not exist
-//         }
-//     }
-
-
-//     public String deleteJogo(String jogoId) {
-//         jogoRepository.deleteById(jogoId);
-//         return jogoId;
-//     }
